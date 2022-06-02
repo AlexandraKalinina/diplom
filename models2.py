@@ -82,28 +82,23 @@ def combinations_liner_model(count, x_mass, y_mass, column_mass, step):
         r = skm.score(x2, y_mass)
         if step == 1:
             if r >= 0.66:
-                skm_mass = skm_mass + [skm]
                 all_mod = all_mod + ["y = b0 + b1x1 + b2x2 + ... + e"]
                 number_models = number_models + [str(listComb[i])]
                 y_score_model = y_score_model + [skm.predict(x2)]
         elif step == 2:
             if r > 0.77:
                 if c < countModel:
-                    model1 = sm.OLS(y_mass, x2)
-                    res = model1.fit()
-                    d = durbin_watson(res.resid)
+                    res = sm.OLS(y_mass, x2).fit()
                     models2 = models2 + ["y = b0 + b1x1 + b2x2 + ... + e"]
                     models2 = models2 + [str(listComb[i])]
                     models2 = models2 + ["determination"]
                     models2 = models2 + [str(r)]
                     models2 = models2 + ["dw"]
-                    models2 = models2 + [str(d)]
+                    models2 = models2 + [str(durbin_watson(res.resid))]
                     models2 = models2 + ["mult"]
-                    mult = np.linalg.cond(res.model.exog)
-                    models2 = models2 + [str(mult)]
-                    test_br_pg = sms.het_breuschpagan(res.resid, res.model.exog)
+                    models2 = models2 + [str(np.linalg.cond(res.model.exog))]
                     models2 = models2 + ["heteroscedasticity"]
-                    models2 = models2 + [str(test_br_pg)]
+                    models2 = models2 + [str(sms.het_breuschpagan(res.resid, res.model.exog))]
                     skm_mass_2 = skm_mass_2 + [res]
                     c = c + 1
                 else:
@@ -148,21 +143,17 @@ def second_model(x_mass, y_mass, step):
         elif step == 2:
             if r > 0.77:
                 if c < countModel:
-                    model1 = sm.OLS(y_mass, x2_first)
-                    res = model1.fit()
-                    d = durbin_watson(res.resid)
+                    res = sm.OLS(y_mass, x2_first).fit()
                     models2 = models2 + ["y = b0 + b1xi + b2xi^2 + e"]
                     models2 = models2 + [str(i)]
                     models2 = models2 + ["determination"]
                     models2 = models2 + [str(r)]
                     models2 = models2 + ["dw"]
-                    models2 = models2 + [str(d)]
+                    models2 = models2 + [str(durbin_watson(res.resid))]
                     models2 = models2 + ["mult"]
-                    mult = np.linalg.cond(res.model.exog)
-                    models2 = models2 + [str(mult)]
-                    test_br_pg = sms.het_breuschpagan(res.resid, res.model.exog)
+                    models2 = models2 + [str(np.linalg.cond(res.model.exog))]
                     models2 = models2 + ["heteroscedasticity"]
-                    models2 = models2 + [str(test_br_pg)]
+                    models2 = models2 + [str(sms.het_breuschpagan(res.resid, res.model.exog))]
                     skm_mass_2 = skm_mass_2 + [res]
                     c = c + 1
     if step == 1:
@@ -210,21 +201,17 @@ def combinations_ln_model(count, x_mass, y_mass, column_mass, step):
         elif step == 2:
             if r > 0.77:
                 if c < countModel:
-                    model1 = sm.OLS(y_mass, x_ln)
-                    res = model1.fit()
-                    d = durbin_watson(res.resid)
+                    res = sm.OLS(y_mass, x_ln).fit()
                     models2 = models2 + ["y = b0 + b1lnx1 + ... + e"]
                     models2 = models2 + [str(listComb[i])]
                     models2 = models2 + ["determination"]
                     models2 = models2 + [str(r)]
                     models2 = models2 + ["dw"]
-                    models2 = models2 + [str(d)]
+                    models2 = models2 + [str(durbin_watson(res.resid))]
                     models2 = models2 + ["mult"]
-                    mult = np.linalg.cond(res.model.exog)
-                    models2 = models2 + [str(mult)]
-                    test_br_pg = sms.het_breuschpagan(res.resid, res.model.exog)
+                    models2 = models2 + [str(np.linalg.cond(res.model.exog))]
                     models2 = models2 + ["heteroscedasticity"]
-                    models2 = models2 + [str(test_br_pg)]
+                    models2 = models2 + [str(sms.het_breuschpagan(res.resid, res.model.exog))]
                     skm_mass_2 = skm_mass_2 + [res]
                     c = c + 1
                 else:
@@ -273,21 +260,17 @@ def combinations_quadratic_model(count, x_mass, y_mass, column_mass, step):
         elif step == 2:
             if r > 0.77:
                 if c < countModel:
-                    model1 = sm.OLS(y_mass, x_q)
-                    res = model1.fit()
-                    d = durbin_watson(res.resid)
+                    res = sm.OLS(y_mass, x_q).fit()
                     models2 = models2 + ["y = b0 + b1x1^2 + b2x2^2 + ... + e"]
                     models2 = models2 + [str(listComb[i])]
                     models2 = models2 + ["determination"]
                     models2 = models2 + [str(r)]
                     models2 = models2 + ["dw"]
-                    models2 = models2 + [str(d)]
+                    models2 = models2 + [str(durbin_watson(res.resid))]
                     models2 = models2 + ["mult"]
-                    mult = np.linalg.cond(res.model.exog)
-                    models2 = models2 + [str(mult)]
-                    test_br_pg = sms.het_breuschpagan(res.resid, res.model.exog)
+                    models2 = models2 + [str(np.linalg.cond(res.model.exog))]
                     models2 = models2 + ["heteroscedasticity"]
-                    models2 = models2 + [str(test_br_pg)]
+                    models2 = models2 + [str(sms.het_breuschpagan(res.resid, res.model.exog))]
                     skm_mass_2 = skm_mass_2 + [res]
                     c = c + 1
                 else:
@@ -430,6 +413,7 @@ elif hypertension == "No":
     hypertension_num = 2
 test_data = np.array([float(glucose), float(cholesterol), float(sistolic), float(diastolic), float(bmi), float(smoking_num), float(gender_num), float(age), float(hypertension_num)])
 
+
 def clear_list(mass):
     xx = [re.sub('\D+', '', i) for i in mass]
     new_list_m = [val for val in xx if val]
@@ -468,7 +452,11 @@ for i in range(len(y_score_test_1)):
 
 y_score_2 = y_score_2.transpose()
 
-y_score_2 = np.power(y_score_2, 2)
+if result_model[0] == "y = b0 + b1x1^2 + b2x2^2 + ... + e":
+    y_score_2 = np.power(y_score_2, 2)
+elif result_model[0] == "y = b0 + b1lnx1 + ... + e":
+    y_score_2 = np.array([math.log(y_score_2[l]) for l in range(len(y_score_2))])
+
 
 res = skm_last.predict(y_score_2)
 print("риск развития сердечно-сосудистого заболевния = ", res)
